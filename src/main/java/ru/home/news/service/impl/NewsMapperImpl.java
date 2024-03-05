@@ -20,6 +20,17 @@ public class NewsMapperImpl implements NewsMapper {
     }
 
     @Override
+    public News updateNewsEntity(NewsDto dto, News news) {
+
+        news.setName(dto.getName());
+        news.setShortDescription(dto.getShortDescription());
+        news.setDescription(dto.getDescription());
+        news.setType(dto.getType());
+        return news;
+    }
+
+
+    @Override
     public NewsDto toNewsDto(News news) {
 
         NewsDto dto = new NewsDto();

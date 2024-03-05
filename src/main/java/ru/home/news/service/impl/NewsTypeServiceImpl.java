@@ -1,5 +1,6 @@
 package ru.home.news.service.impl;
 
+import ru.home.news.dto.NewsTypeDto;
 import ru.home.news.model.NewsType;
 import ru.home.news.service.NewsTypeService;
 
@@ -8,7 +9,8 @@ import java.util.List;
 public class NewsTypeServiceImpl implements NewsTypeService {
 
     @Override
-    public void addNewsType(NewsType type) {
+    public void addNewsType(NewsTypeDto type) {
+
 
     }
 

@@ -1,12 +1,13 @@
 package ru.home.news.service;
 
+import ru.home.news.dto.NewsTypeDto;
 import ru.home.news.model.NewsType;
 
 import java.util.List;
 
 public interface NewsTypeService {
 
-    void addNewsType(NewsType type);
+    void addNewsType(NewsTypeDto type);
 
     NewsType getNewsType();
 

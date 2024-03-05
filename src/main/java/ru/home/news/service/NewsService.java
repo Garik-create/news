@@ -12,11 +12,11 @@ public interface NewsService {
 
     NewsDto getNews(long id);
 
-    void updateNews(NewsDto news, String name);
+    void updateNews(NewsDto news, long id);
 
-    News deleteNews();
+    void deleteNews(Long id);
 
-    List<News> getAllNews();
+    List<NewsDto> getAllNews();
 
-    List<News> getAllNewsOfTheType(NewsType type);
+    List<NewsDto> getAllNewsOfTheType(NewsType type);
 }

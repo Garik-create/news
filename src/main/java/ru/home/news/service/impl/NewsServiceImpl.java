@@ -1,5 +1,6 @@
 package ru.home.news.service.impl;
 
+import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.home.news.dto.NewsDto;
@@ -8,6 +9,7 @@ import ru.home.news.model.NewsType;
 import ru.home.news.repository.NewsRepository;
 import ru.home.news.service.NewsService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,32 +45,41 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public void updateNews(NewsDto newsDto, String name) {
+    public void updateNews(NewsDto newsDto, long id) {
 
-        News oldNews = newsRepository.findByName(name)
+        News oldNews = newsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Такой новости не существует."));
-        NewsDto oldNewsDto = newsMapper.toNewsDto(oldNews);
-        NewsDto updatedNewsDto = new NewsDto();
-//        updatedNewsDto.setType(oldNewsDto);
-//
-//        oldNews.setDescription(news.getDescription());
-//        oldNews.setName(news.getName());
-//        oldNews.setType(news.getType());
-//        newsRepository.save(news);
+        newsRepository.save(newsMapper.updateNewsEntity(newsDto, oldNews));
     }
 
     @Override
-    public News deleteNews() {
-        return null;
+    public void deleteNews(@Nonnull Long id) {
+
+        newsRepository.deleteById(id);
     }
 
     @Override
-    public List<News> getAllNews() {
-        return null;
+    public List<NewsDto> getAllNews() {
+
+        List<NewsDto> newsDtoList = new ArrayList<>();
+        List<News> newsList = newsRepository.findAll();
+        for (News news : newsList) {
+            newsDtoList.add(newsMapper.toNewsDto(news));
+        }
+        return newsDtoList;
     }
 
     @Override
-    public List<News> getAllNewsOfTheType(NewsType type) {
-        return null;
+    public List<NewsDto> getAllNewsOfTheType(NewsType type) {
+
+        List<NewsDto> newsDtoList = new ArrayList<>();
+        List<News> newsList = newsRepository.findAllByType(type)
+                .orElseThrow(()-> new IllegalArgumentException("Такого типа не существует."));
+
+        for (News news : newsList) {
+            newsDtoList.add(newsMapper.toNewsDto(news));
+        }
+        return newsDtoList;
     }
+
 }

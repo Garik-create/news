@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-    Optional<List<News>> findAllByType(NewsType type);
+    List<News> findAllByType(NewsType type);
 
 }

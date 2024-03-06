@@ -7,6 +7,7 @@ import ru.home.news.dto.NewsDto;
 import ru.home.news.model.News;
 import ru.home.news.model.NewsType;
 import ru.home.news.repository.NewsRepository;
+import ru.home.news.repository.NewsTypeRepository;
 import ru.home.news.service.NewsService;
 
 import java.util.ArrayList;
@@ -20,17 +21,23 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsMapperImpl newsMapper;
 
+    private final NewsTypeRepository newsTypeRepository;
 
-    public NewsServiceImpl(NewsRepository newsRepository, NewsMapperImpl newsMapper) {
+
+    public NewsServiceImpl(NewsRepository newsRepository,
+                           NewsMapperImpl newsMapper,
+                           NewsTypeRepository newsTypeRepository) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
+        this.newsTypeRepository = newsTypeRepository;
     }
 
     @Override
     @Transactional
-    public void addNews(NewsDto newsDto) {
+    public NewsDto addNews(NewsDto newsDto) {
 
-        newsRepository.save(newsMapper.toNewsEntity(newsDto));
+        News news = newsMapper.toNewsEntity(newsDto);
+        return newsMapper.toNewsDto(newsRepository.save(news));
     }
 
     @Override
@@ -45,11 +52,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public void updateNews(NewsDto newsDto, long id) {
+    public NewsDto updateNews(NewsDto newsDto, long id) {
 
         News oldNews = newsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Такой новости не существует."));
-        newsRepository.save(newsMapper.updateNewsEntity(newsDto, oldNews));
+        return newsMapper.toNewsDto(newsRepository
+                .save(newsMapper.updateNewsEntity(newsDto, oldNews)));
     }
 
     @Override
@@ -73,11 +81,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<NewsDto> getAllNewsOfTheType(NewsType type) {
+    public List<NewsDto> getAllNewsOfTheType(long id) {
 
+        NewsType newsType = newsTypeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Такого типа новости нет."));
         List<NewsDto> newsDtoList = new ArrayList<>();
-        List<News> newsList = newsRepository.findAllByType(type)
-                .orElseThrow(() -> new IllegalArgumentException("Такого типа не существует."));
+        List<News> newsList = newsRepository.findAllByType(newsType);
 
         for (News news : newsList) {
             newsDtoList.add(newsMapper.toNewsDto(news));

@@ -9,11 +9,11 @@ public interface NewsTypeService {
 
     void addNewsType(NewsTypeDto type);
 
-    NewsType getNewsType();
+    NewsTypeDto getNewsType(long id);
 
-    NewsType updateNewsType(NewsType type);
+    void updateNewsType(NewsTypeDto type, long id);
 
-    NewsType deleteNewsType();
+    void deleteNewsType(Long id);
 
-    List<NewsType> getAllNewsTypes();
+    List<NewsTypeDto> getAllNewsTypes();
 }

@@ -7,7 +7,9 @@ import ru.home.news.model.NewsType;
 
 public interface NewsTypeMapper {
 
-    NewsType toNewsEntity(NewsTypeDto newsTypeDto);
+    NewsType toNewsTypeEntity(NewsTypeDto newsTypeDto);
 
     NewsTypeDto toNewTypeDto(NewsType newsType);
+
+    NewsType updateNewsType(NewsTypeDto newsTypeDto, NewsType newsType);
 }

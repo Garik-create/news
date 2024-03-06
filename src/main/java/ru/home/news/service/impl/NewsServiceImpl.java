@@ -53,12 +53,14 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Transactional
     public void deleteNews(@Nonnull Long id) {
 
         newsRepository.deleteById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<NewsDto> getAllNews() {
 
         List<NewsDto> newsDtoList = new ArrayList<>();
@@ -70,11 +72,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<NewsDto> getAllNewsOfTheType(NewsType type) {
 
         List<NewsDto> newsDtoList = new ArrayList<>();
         List<News> newsList = newsRepository.findAllByType(type)
-                .orElseThrow(()-> new IllegalArgumentException("Такого типа не существует."));
+                .orElseThrow(() -> new IllegalArgumentException("Такого типа не существует."));
 
         for (News news : newsList) {
             newsDtoList.add(newsMapper.toNewsDto(news));

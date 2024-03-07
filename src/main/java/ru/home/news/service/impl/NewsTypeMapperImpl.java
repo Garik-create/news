@@ -27,10 +27,13 @@ public class NewsTypeMapperImpl implements NewsTypeMapper {
     }
 
     @Override
-    public NewsType updateNewsType(NewsTypeDto newsTypeDto, NewsType newsType) {
+    public NewsType updateNewsType(NewsTypeDto newsTypeDto,
+                                   long id) {
 
+        NewsType newsType = new NewsType();
         newsType.setTypeName(newsTypeDto.getTypeName());
         newsType.setTypeColour(newsTypeDto.getTypeColour());
+        newsType.setId(id);
         return newsType;
     }
 }

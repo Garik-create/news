@@ -45,7 +45,7 @@ public class NewsController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseEntity<?> getAllNews() {
         return ResponseEntity.of(Optional.ofNullable(service.getAllNews()));
     }

@@ -11,5 +11,5 @@ public interface NewsTypeMapper {
 
     NewsTypeDto toNewTypeDto(NewsType newsType);
 
-    NewsType updateNewsType(NewsTypeDto newsTypeDto, NewsType newsType);
+    NewsType updateNewsType(NewsTypeDto newsTypeDto, long id);
 }

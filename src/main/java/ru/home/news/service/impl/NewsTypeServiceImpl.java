@@ -1,7 +1,6 @@
 package ru.home.news.service.impl;
 
 import jakarta.annotation.Nonnull;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.home.news.dto.NewsTypeDto;
@@ -27,9 +26,10 @@ public class NewsTypeServiceImpl implements NewsTypeService {
 
     @Override
     @Transactional
-    public void addNewsType(NewsTypeDto type) {
+    public NewsTypeDto addNewsType(NewsTypeDto type) {
 
-        repository.save(mapper.toNewsTypeEntity(type));
+        NewsType newsType = repository.save(mapper.toNewsTypeEntity(type));
+        return mapper.toNewTypeDto(newsType);
     }
 
     @Override
@@ -44,12 +44,14 @@ public class NewsTypeServiceImpl implements NewsTypeService {
 
     @Override
     @Transactional
-    public void updateNewsType(NewsTypeDto type, long id) {
+    public NewsTypeDto updateNewsType(NewsTypeDto type, long id) {
 
-        NewsType newsType = repository.findById(id).orElseThrow(
+        NewsType oldNewsType = repository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Такой тип новости не найден.")
         );
-        repository.save(mapper.updateNewsType(type, newsType));
+        NewsType updatedNewsType
+                = repository.save(mapper.updateNewsType(type, oldNewsType.getId()));
+        return mapper.toNewTypeDto(updatedNewsType);
     }
 
     @Override

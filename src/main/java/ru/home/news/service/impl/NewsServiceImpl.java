@@ -12,6 +12,7 @@ import ru.home.news.service.NewsService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -36,7 +37,12 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto addNews(NewsDto newsDto) {
 
-        News news = newsMapper.toNewsEntity(newsDto);
+        long type = newsDto.getType();
+        NewsType newsType = newsTypeRepository.findById(type)
+                .orElseThrow(
+                        ()-> new IllegalArgumentException("Такого типа новости не существует!")
+                );
+        News news = newsMapper.toNewsEntity(newsDto, newsType);
         return newsMapper.toNewsDto(newsRepository.save(news));
     }
 
@@ -54,10 +60,15 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto updateNews(NewsDto newsDto, long id) {
 
+        long type = newsDto.getType();
+        NewsType newsType = newsTypeRepository.findById(type)
+                .orElseThrow(
+                        ()-> new IllegalArgumentException("Такого типа новости не существует!")
+                );
         News oldNews = newsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Такой новости не существует."));
         return newsMapper.toNewsDto(newsRepository
-                .save(newsMapper.updateNewsEntity(newsDto, oldNews)));
+                .save(newsMapper.updateNewsEntity(newsDto, oldNews, newsType)));
     }
 
     @Override

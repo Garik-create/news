@@ -12,7 +12,7 @@ public class NewsDto {
 
     private String description;
 
-    private NewsType type;
+    private long type;
 
 
     public String getName() {
@@ -39,11 +39,11 @@ public class NewsDto {
         this.description = description;
     }
 
-    public NewsType getType() {
+    public long getType() {
         return type;
     }
 
-    public void setType(NewsType type) {
+    public void setType(long type) {
         this.type = type;
     }
 

@@ -18,7 +18,7 @@ public class NewsTypeController {
         this.service = service;
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<NewsTypeDto> createNewsType(@RequestBody NewsTypeDto newsTypeDto) {
         return ResponseEntity.ok(service.addNewsType(newsTypeDto));
     }

@@ -20,7 +20,7 @@ public class NewsController {
         this.service = service;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<NewsDto> createNews(@RequestBody NewsDto newsDto) {
         return ResponseEntity.ok(service.addNews(newsDto));
     }

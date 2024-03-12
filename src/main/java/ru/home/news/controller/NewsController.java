@@ -1,5 +1,6 @@
 package ru.home.news.controller;
 
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,15 +11,16 @@ import ru.home.news.service.NewsService;
 
 import java.util.Optional;
 
+@Data
 @Controller
 @RequestMapping("/news")
 public class NewsController {
 
     private final NewsService service;
 
-    public NewsController(NewsService service) {
-        this.service = service;
-    }
+//    public NewsController(NewsService service) {
+//        this.service = service;
+//    }
 
     @PostMapping("/")
     public ResponseEntity<NewsDto> createNews(@RequestBody NewsDto newsDto) {

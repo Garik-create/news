@@ -12,18 +12,15 @@ public class NewsTypeMapperImpl implements NewsTypeMapper {
     public NewsType toNewsTypeEntity(NewsTypeDto newsTypeDto) {
 
         NewsType newsType = new NewsType();
-        newsType.setTypeName(newsTypeDto.getTypeName());
-        newsType.setTypeColour(newsTypeDto.getTypeColour());
+        newsType.setTypeName(newsTypeDto.typeName());
+        newsType.setTypeColour(newsTypeDto.typeColour());
         return newsType;
     }
 
     @Override
     public NewsTypeDto toNewTypeDto(NewsType newsType) {
 
-        NewsTypeDto dto = new NewsTypeDto();
-        dto.setTypeName(newsType.getTypeName());
-        dto.setTypeColour(newsType.getTypeColour());
-        return dto;
+        return new NewsTypeDto(newsType.getTypeName(), newsType.getTypeColour());
     }
 
     @Override
@@ -31,8 +28,8 @@ public class NewsTypeMapperImpl implements NewsTypeMapper {
                                    long id) {
 
         NewsType newsType = new NewsType();
-        newsType.setTypeName(newsTypeDto.getTypeName());
-        newsType.setTypeColour(newsTypeDto.getTypeColour());
+        newsType.setTypeName(newsTypeDto.typeName());
+        newsType.setTypeColour(newsTypeDto.typeColour());
         newsType.setId(id);
         return newsType;
     }

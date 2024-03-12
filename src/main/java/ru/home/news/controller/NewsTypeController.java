@@ -1,5 +1,6 @@
 package ru.home.news.controller;
 
+import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -8,17 +9,18 @@ import ru.home.news.service.NewsTypeService;
 
 import java.util.List;
 
+@Data
 @Controller
 @RequestMapping("/type")
 public class NewsTypeController {
 
     private final NewsTypeService service;
 
-    public NewsTypeController(NewsTypeService service) {
-        this.service = service;
-    }
+//    public NewsTypeController(NewsTypeService service) {
+//        this.service = service;
+//    }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<NewsTypeDto> createNewsType(@RequestBody NewsTypeDto newsTypeDto) {
         return ResponseEntity.ok(service.addNewsType(newsTypeDto));
     }

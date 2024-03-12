@@ -37,7 +37,7 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto addNews(NewsDto newsDto) {
 
-        long type = newsDto.getType();
+        long type = newsDto.type();
         NewsType newsType = newsTypeRepository.findById(type)
                 .orElseThrow(
                         ()-> new IllegalArgumentException("Такого типа новости не существует!")
@@ -60,7 +60,7 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto updateNews(NewsDto newsDto, long id) {
 
-        long type = newsDto.getType();
+        long type = newsDto.type();
         NewsType newsType = newsTypeRepository.findById(type)
                 .orElseThrow(
                         ()-> new IllegalArgumentException("Такого типа новости не существует!")
